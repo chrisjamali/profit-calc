@@ -1,0 +1,158 @@
+<form #esppForm="ngForm" (submit)="send(offerDate,purchaseDate)">
+  <mat-card>
+    <mat-card-header class="center">
+      <h1>ESPP Profit Calculator</h1>
+      <br />
+    </mat-card-header>
+
+    <mat-divider></mat-divider>
+
+    <mat-form-field appearance="fill">
+      <mat-label>First day of Offering Period</mat-label>
+      <input
+        matInput
+        [matDatepicker]="dp"
+        (dateChange)="this.offerDate = $event.value"
+        name="offerDate"
+        required
+      />
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="dp"></mat-datepicker-toggle>
+      <mat-datepicker touchUi #dp></mat-datepicker>
+    </mat-form-field>
+
+    <mat-divider> </mat-divider>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Purchase Date</mat-label>
+      <input
+        matInput
+        [matDatepicker]="purchase"
+        (dateChange)="this.purchaseDate = $event.value"
+        name="purchaseDate"
+        required
+      />
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="purchase"
+      ></mat-datepicker-toggle>
+      <mat-datepicker touchUi #purchase></mat-datepicker>
+    </mat-form-field>
+
+    <mat-divider></mat-divider>
+
+    <mat-form-field>
+      <mat-label>Offer Price</mat-label>
+      <input
+        matInput
+        placeholder="Offer Price"
+        [(ngModel)]="offerPrice"
+        name="offerPrice"
+        required
+      />
+    </mat-form-field>
+
+    <mat-divider></mat-divider>
+
+    <mat-form-field>
+      <mat-label>Purchase Price</mat-label>
+      <input
+        matInput
+        placeholder="Purchase Price"
+        [(ngModel)]="purchasePrice"
+        name="purchasePrice"
+        required
+      />
+    </mat-form-field>
+
+    <mat-divider></mat-divider>
+
+    <mat-radio-group
+      aria-label="Does your Employer offer Lookback"
+      [(ngModel)]="lookback"
+      name="lookback"
+      required
+    >
+      <mat-label required>Does your plan have a Lookback policy? </mat-label>
+      <div class="center">
+        <mat-radio-button value="true">Yes</mat-radio-button>
+        <mat-radio-button value="false">No</mat-radio-button>
+      </div>
+    </mat-radio-group>
+
+    <mat-divider></mat-divider>
+    <!-- NUMBER OF SHARES -->
+    <mat-form-field>
+      <mat-label>Number of Shares held</mat-label>
+      <input
+        matInput
+        placeholder="ex) 50"
+        [(ngModel)]="numShares"
+        name="numShares"
+        required
+      />
+    </mat-form-field>
+    <mat-divider></mat-divider>
+    <!-- % DISCOUNT -->
+    <mat-form-field>
+      <mat-label>Discount %</mat-label>
+      <input
+        matInput
+        placeholder="1-15"
+        [(ngModel)]="discountRate"
+        name="discountRate"
+        required
+      />
+    </mat-form-field>
+    <mat-divider></mat-divider>
+    <!-- Current Stock Price -->
+    <mat-form-field>
+      <mat-label>Current Stock Price </mat-label>
+      <input
+        matInput
+        placeholder="330.45"
+        [(ngModel)]="currentStockPrice"
+        name="currentStockPrice"
+        required
+      />
+    </mat-form-field>
+
+    <mat-divider></mat-divider>
+    <mat-form-field>
+      <mat-label>What is your gross yearly income? </mat-label>
+      <input
+        matInput
+        placeholder="100,000"
+        [(ngModel)]="income"
+        name="income"
+        required
+      />
+    </mat-form-field>
+
+    <mat-divider></mat-divider>
+
+    <mat-form-field>
+      <mat-label>What is your tax filing status </mat-label>
+      <mat-select [(ngModel)]="taxStatus" name="taxStatus" required>
+        <mat-option *ngFor="let status of taxFilingStatus" [value]="status">
+          {{ status }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br />
+    <mat-card-footer>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" type="submit">Done</button>
+      </mat-card-actions>
+    </mat-card-footer>
+  </mat-card>
+</form>
+
+<pre>
+  {{ esppForm.value | json }}
+  {{esppForm.valid | json}}
+   <!-- {{esppForm.offerDate | json}} -->
+  {{offerDate | json}}
+  {{purchaseDate | json}}
+</pre>

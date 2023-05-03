@@ -4,7 +4,7 @@ import * as moment from 'moment';
   providedIn: 'root',
 })
 export class CheckQualifyService {
-  constructor() {}
+  
 
   checkQualify(offerDate: moment.Moment): boolean {
     const today = moment();

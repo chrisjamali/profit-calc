@@ -1,14 +1,16 @@
-<form #esppForm="ngForm" (submit)="send(offerDate,purchaseDate)">
-  <mat-card>
-    <mat-card-header class="center">
-      <h1>ESPP Profit Calculator</h1>
-      <br />
-    </mat-card-header>
+<header class="center">
+  <h1>ESPP Profit Calculator</h1>
+  <br />
+</header>
 
+<form #esppForm="ngForm">
+  <!-- <mat-card> -->
+
+  <main>
     <mat-divider></mat-divider>
-
+    <mat-label class="center title">Start Date of Offering Period</mat-label>
     <mat-form-field appearance="fill">
-      <mat-label>First day of Offering Period</mat-label>
+      <mat-label>Offer Date/Grant Date</mat-label>
       <input
         matInput
         [matDatepicker]="dp"
@@ -22,7 +24,7 @@
     </mat-form-field>
 
     <mat-divider> </mat-divider>
-
+    <mat-label class="center title">End Date of Offering Period</mat-label>
     <mat-form-field appearance="fill">
       <mat-label>Purchase Date</mat-label>
       <input
@@ -44,11 +46,15 @@
 
     <mat-form-field>
       <mat-label>Offer Price</mat-label>
+      <mat-icon matPrefix>attach_money</mat-icon>
+
       <input
         matInput
         placeholder="Offer Price"
         [(ngModel)]="offerPrice"
         name="offerPrice"
+        type="number"
+        appAutoDecimal
         required
       />
     </mat-form-field>
@@ -57,11 +63,15 @@
 
     <mat-form-field>
       <mat-label>Purchase Price</mat-label>
+      <mat-icon matPrefix>attach_money</mat-icon>
+
       <input
         matInput
         placeholder="Purchase Price"
         [(ngModel)]="purchasePrice"
         name="purchasePrice"
+        type="number"
+        appAutoDecimal
         required
       />
     </mat-form-field>
@@ -72,16 +82,24 @@
       aria-label="Does your Employer offer Lookback"
       [(ngModel)]="lookback"
       name="lookback"
+      type="boolean"
       required
     >
-      <mat-label required>Does your plan have a Lookback policy? </mat-label>
+      <mat-label class="title" required
+        >Does your plan have a Lookback policy?
+      </mat-label>
       <div class="center">
-        <mat-radio-button value="true">Yes</mat-radio-button>
-        <mat-radio-button value="false">No</mat-radio-button>
+        <mat-radio-button [value]="true">
+          <span class="radio-label">Yes</span>
+        </mat-radio-button>
+        <mat-radio-button [value]="false"
+          ><span class="radio-label">No</span></mat-radio-button
+        >
       </div>
     </mat-radio-group>
 
     <mat-divider></mat-divider>
+
     <!-- NUMBER OF SHARES -->
     <mat-form-field>
       <mat-label>Number of Shares held</mat-label>
@@ -90,6 +108,7 @@
         placeholder="ex) 50"
         [(ngModel)]="numShares"
         name="numShares"
+        type="number"
         required
       />
     </mat-form-field>
@@ -101,6 +120,7 @@
         matInput
         placeholder="1-15"
         [(ngModel)]="discountRate"
+        type="number"
         name="discountRate"
         required
       />
@@ -109,23 +129,29 @@
     <!-- Current Stock Price -->
     <mat-form-field>
       <mat-label>Current Stock Price </mat-label>
+      <mat-icon matPrefix>attach_money</mat-icon>
       <input
         matInput
         placeholder="330.45"
         [(ngModel)]="currentStockPrice"
         name="currentStockPrice"
+        type="number"
+        appAutoDecimal
         required
       />
     </mat-form-field>
 
     <mat-divider></mat-divider>
+    <mat-label class="title">What is your gross yearly income? </mat-label>
     <mat-form-field>
-      <mat-label>What is your gross yearly income? </mat-label>
+      <mat-label>Gross Income </mat-label>
+      <mat-icon matPrefix>attach_money</mat-icon>
       <input
         matInput
         placeholder="100,000"
         [(ngModel)]="income"
         name="income"
+        type="number"
         required
       />
     </mat-form-field>
@@ -140,13 +166,26 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+
     <br />
-    <mat-card-footer>
-      <mat-card-actions>
-        <button mat-raised-button color="primary" type="submit">Done</button>
-      </mat-card-actions>
-    </mat-card-footer>
-  </mat-card>
+
+    <!-- <mat-card-footer>
+      <mat-card-actions> -->
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="
+        send(esppForm.form.value, offerDate, purchaseDate);
+        $event.preventDefault()
+      "
+      [disabled]="!esppForm.valid && !offerDate && !purchaseDate"
+    >
+      Calculate
+    </button>
+    <!-- </mat-card-actions>
+    </mat-card-footer> -->
+  </main>
+  <!-- </mat-card> -->
 </form>
 
 <pre>

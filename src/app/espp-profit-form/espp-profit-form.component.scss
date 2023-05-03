@@ -1,11 +1,14 @@
-mat-card-header {
+header {
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #3f51b5;
   color: #e0e0e0;
   box-sizing: border-box;
-  border-radius: 10px;
+  // border-radius: 10px;
+  width: 100%;
+  height: 10%;
+  margin-bottom: 1em;
   mat-card-title {
     font-size: 2em;
     font-weight: bold;
@@ -18,64 +21,89 @@ mat-card-header {
     letter-spacing: 2px;
   }
 }
-mat-card {
+main {
   margin: auto;
-  width: 80%;
-  height: 80%;
+  width: 90%;
+  // height: 90%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   // padding-bottom: 2em;
   border-radius: 10px;
   box-sizing: border-box;
-  button{
+  button {
     padding: 1em;
-    margin-bottom:1.5em;
+    margin-bottom: 1.5em;
+  }
+
+  button {
+    margin: auto;
+    width: 90%;
+    height: 10%;
+    font-size: 1.5em;
+    font-weight: bold;
+    background-color: #3f51b5;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    &:hover {
+      background-color: #283593;
+    }
+    &:disabled {
+      background-color: #9e9e9e;
+      color: #e0e0e0;
+      cursor: not-allowed;
+    }
   }
 }
+ .title {
+    font-size: 4vw;
+    font-weight: 500;
+    text-align: center;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+  }
+
 mat-form-field {
   margin: auto;
-  width: 80%;
-}
-
-button {
-  margin: auto;
-  width: 80%;
-  height: 10%;
-  font-size: 1.5em;
-  font-weight: bold;
-  background-color: #3f51b5;
-  color: white;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-  &:hover {
-    background-color: #283593;
-  }
-  &:disabled {
-    background-color: #9e9e9e;
-    color: #e0e0e0;
-    cursor: not-allowed;
+  width: 90%;
+  mat-label {
+    font-size: 1rem;
+    font-weight: 500;
   }
 }
 
 mat-radio-group {
+  padding: 1em;
   margin: auto;
   mat-radio-button {
     display: flex;
     justify-content: center;
     align-items: center;
+    .radio-label {
+      font-size: 3vw;
+      font-weight: 500;
+    }
+
   }
 
   label {
     color: green !important;
   }
 
-  mat-label {
-    font-size: 16px;
-    font-weight: 500;
-  }
+  // mat-label {
+  //   font-size: 1.5em;
+  //   font-weight: 500;
+  // }
 }
 mat-divider {
   margin: 1em 0;
+}
+
+
+
+
+form {
+  // width:100%;
 }

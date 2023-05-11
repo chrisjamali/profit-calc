@@ -24,7 +24,7 @@ import { TaxService } from './services/tax-service/tax.service';
 import { TotalPriceService } from './services/total-price/total-price.service';
 import { DatePipe } from '@angular/common';
 import { AutoDecimalDirective } from './directives/auto-decimal.directive';
-
+import { ReactiveFormsModule } from '@angular/forms';
 const moment = _moment;
 @NgModule({
   declarations: [AppComponent, EsppProfitFormComponent, AutoDecimalDirective],
@@ -34,6 +34,7 @@ const moment = _moment;
     BrowserAnimationsModule,
     MaterialModule,
     FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [
     {

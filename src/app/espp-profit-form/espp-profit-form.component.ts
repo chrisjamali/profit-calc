@@ -28,16 +28,16 @@ interface EsppForm {
   providers: [DatePipe],
 })
 export class EsppProfitFormComponent {
-  @Input() offerPrice?: number;
-  @Input() purchasePrice?: number;
-  @Input() offerDate?: moment.Moment;
-  @Input() purchaseDate?: moment.Moment;
-  @Input() lookback?: boolean;
-  @Input() numShares?: number;
-  @Input() discountRate?: number;
-  @Input() currentStockPrice?: number;
-  @Input() income?: number;
-  @Input() taxStatus?: string;
+  // @Input() offerPrice?: number;
+  // @Input() purchasePrice?: number;
+  // @Input() offerDate?: moment.Moment;
+  // @Input() purchaseDate?: moment.Moment;
+  // @Input() lookback?: boolean;
+  // @Input() numShares?: number;
+  // @Input() discountRate?: number;
+  // @Input() currentStockPrice?: number;
+  // @Input() income?: number;
+  // @Input() taxStatus?: string;
 
   qualifiedDisposition?: boolean;
   qualifiedCapitalGains?: boolean;
@@ -63,7 +63,7 @@ export class EsppProfitFormComponent {
     profits: this.form.group({
       offerPrice: new FormControl<number | null>(null, Validators.required),
       purchasePrice: new FormControl<number | null>(null, Validators.required),
-      lookback: [''],
+      lookback: new FormControl<boolean | null>(null, Validators.required),
       numShares: new FormControl<number | null>(null, Validators.required),
       discountRate: new FormControl<number | null>(null, Validators.required),
       currentStockPrice: new FormControl<number | null>(
@@ -82,18 +82,7 @@ export class EsppProfitFormComponent {
     private checkQualifyService: CheckQualifyService,
     private TaxService: TaxService,
     private form: FormBuilder
-  ) {
-    this.offerPrice = 50.8;
-    this.purchasePrice = 59.8;
-    this.offerDate = moment('2020-01-01');
-    this.purchaseDate = moment('2021-01-01');
-    this.lookback = true;
-    this.numShares = 100;
-    this.discountRate = 15;
-    this.currentStockPrice = 100;
-    this.income = 200000;
-    this.taxStatus = 'Single';
-  }
+  ) {}
 
   taxFilingStatus = [
     'Single',
@@ -158,56 +147,77 @@ export class EsppProfitFormComponent {
     console.log(f, o, p);
   }
 
-  send(
-    esppForm: EsppForm,
-    offerDate?: moment.Moment,
-    purchaseDate?: moment.Moment
-  ) {
-    const hasRequiredProperties =
-      esppForm &&
-      esppForm.offerPrice !== undefined &&
-      esppForm.purchasePrice !== undefined &&
-      esppForm.numShares !== undefined &&
-      esppForm.discountRate !== undefined &&
-      esppForm.currentStockPrice !== undefined &&
-      esppForm.lookback !== undefined &&
-      esppForm.income !== undefined &&
-      esppForm.taxStatus !== undefined;
+  // send(
+  //   esppForm: EsppForm,
+  //   offerDate?: moment.Moment,
+  //   purchaseDate?: moment.Moment
+  // ) {
+  //   const hasRequiredProperties =
+  //     esppForm &&
+  //     esppForm.offerPrice !== undefined &&
+  //     esppForm.purchasePrice !== undefined &&
+  //     esppForm.numShares !== undefined &&
+  //     esppForm.discountRate !== undefined &&
+  //     esppForm.currentStockPrice !== undefined &&
+  //     esppForm.lookback !== undefined &&
+  //     esppForm.income !== undefined &&
+  //     esppForm.taxStatus !== undefined;
 
-    if (hasRequiredProperties) {
-      const {
-        offerPrice,
-        purchasePrice,
-        numShares,
-        discountRate,
-        currentStockPrice,
-        lookback,
-        income,
-        taxStatus,
-      } = esppForm;
+  //   if (hasRequiredProperties) {
+  //     const {
+  //       offerPrice,
+  //       purchasePrice,
+  //       numShares,
+  //       discountRate,
+  //       currentStockPrice,
+  //       lookback,
+  //       income,
+  //       taxStatus,
+  //     } = esppForm;
 
-      this.getIncomeTaxBracket(income, taxStatus);
-      this.getCapitalGainsTaxBracket(income, taxStatus);
+  //     this.getIncomeTaxBracket(income, taxStatus);
+  //     this.getCapitalGainsTaxBracket(income, taxStatus);
 
-      this.getTotalProfit(
-        offerPrice,
-        purchasePrice,
-        numShares,
-        discountRate,
-        currentStockPrice,
-        lookback
-      );
-    }
-    if (offerDate && purchaseDate) {
-      this.checkQualify(offerDate, purchaseDate);
-    }
+  //     this.getTotalProfit(
+  //       offerPrice,
+  //       purchasePrice,
+  //       numShares,
+  //       discountRate,
+  //       currentStockPrice,
+  //       lookback
+  //     );
+  //   }
+  //   if (offerDate && purchaseDate) {
+  //     this.checkQualify(offerDate, purchaseDate);
+  //   }
 
-    console.log('AFTER SEND', this);
-    for (const key in this) {
-      console.log(key, typeof this[key]);
-    }
+  //   console.log('AFTER SEND', this);
+  //   for (const key in this) {
+  //     console.log(key, typeof this[key]);
+  //   }
+  // }
+
+  prePopulateForm() {
+    this.esppForm.setValue({
+      dates: {
+        offerDate: moment('2020-01-01'),
+        purchaseDate: moment('2021-01-01'),
+      },
+      profits: {
+        offerPrice: 50.8,
+        purchasePrice: 25.4,
+        lookback: true,
+        numShares: 100,
+        discountRate: 15,
+        currentStockPrice: 100,
+      },
+
+      taxes: {
+        income: 200000,
+        taxStatus: 'Single',
+      },
+    });
   }
-
   logger<T>(stuff: T) {
     console.log(stuff);
   }

@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class TotalPriceService {
-  constructor() {}
+
 
   considerLookback(
     lookback: boolean,
@@ -41,5 +41,5 @@ export class TotalPriceService {
     return totalProfit;
   }
 
-  
+
 }

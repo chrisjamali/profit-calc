@@ -1,10 +1,13 @@
 import { Component, Input, Output } from '@angular/core';
 import { OnInit } from '@angular/core';
-import { TotalPriceService } from '../services/total-price.service';
+import { TotalPriceService } from '../services/total-price/total-price.service';
 import { CheckQualifyService } from '../services/check-qualify/check-qualify.service';
 import { TaxService } from '../services/tax-service/tax.service';
 import * as moment from 'moment';
 import { DatePipe } from '@angular/common';
+
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 interface EsppForm {
   offerPrice: number;
@@ -44,10 +47,41 @@ export class EsppProfitFormComponent {
   totalProfitTaxed?: number;
   incomeTaxBracket?: number;
   capitalGainsTaxBracket?: number;
+
+  // how to make the inputs a specific data type like number or moment.Moment
+  esppForm = this.form.group({
+    dates: this.form.group({
+      offerDate: new FormControl<moment.Moment | null>(
+        null,
+        Validators.required
+      ),
+      purchaseDate: new FormControl<moment.Moment | null>(
+        null,
+        Validators.required
+      ),
+    }),
+    profits: this.form.group({
+      offerPrice: new FormControl<number | null>(null, Validators.required),
+      purchasePrice: new FormControl<number | null>(null, Validators.required),
+      lookback: [''],
+      numShares: new FormControl<number | null>(null, Validators.required),
+      discountRate: new FormControl<number | null>(null, Validators.required),
+      currentStockPrice: new FormControl<number | null>(
+        null,
+        Validators.required
+      ),
+    }),
+    taxes: this.form.group({
+      income: new FormControl<number | null>(null, Validators.required),
+      taxStatus: new FormControl<string | null>(null, Validators.required),
+    }),
+  });
+
   constructor(
     private totalPriceService: TotalPriceService,
     private checkQualifyService: CheckQualifyService,
-    private TaxService: TaxService
+    private TaxService: TaxService,
+    private form: FormBuilder
   ) {
     this.offerPrice = 50.8;
     this.purchasePrice = 59.8;
@@ -169,7 +203,7 @@ export class EsppProfitFormComponent {
     }
 
     console.log('AFTER SEND', this);
-    for (let key in this) {
+    for (const key in this) {
       console.log(key, typeof this[key]);
     }
   }

@@ -21,7 +21,7 @@ import * as _moment from 'moment';
 // tslint:disable-next-line:no-duplicate-imports
 import { CheckQualifyService } from './services/check-qualify/check-qualify.service';
 import { TaxService } from './services/tax-service/tax.service';
-import { TotalPriceService } from './services/total-price.service';
+import { TotalPriceService } from './services/total-price/total-price.service';
 import { DatePipe } from '@angular/common';
 import { AutoDecimalDirective } from './directives/auto-decimal.directive';
 

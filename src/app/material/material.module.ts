@@ -18,7 +18,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatRadioModule } from '@angular/material/radio';
-
+// import { MatCurrencyFormatModule } from 'mat-currency-format';
 @NgModule({
   exports: [
     MatRadioModule,
@@ -39,6 +39,7 @@ import { MatRadioModule } from '@angular/material/radio';
     MatTableModule,
     MatToolbarModule,
     MatButtonModule,
+    // MatCurrencyFormatModule,
   ],
 })
 export class MaterialModule {}

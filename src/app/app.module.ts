@@ -49,6 +49,9 @@ const moment = _moment;
     { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
     CheckQualifyService,
     TaxService,
+    TotalPriceService,
+    DatePipe,
+    FormData
   ],
   bootstrap: [AppComponent],
 })

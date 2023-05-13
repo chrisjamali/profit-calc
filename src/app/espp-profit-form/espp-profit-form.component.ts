@@ -82,7 +82,9 @@ export class EsppProfitFormComponent {
     private checkQualifyService: CheckQualifyService,
     private TaxService: TaxService,
     private form: FormBuilder
-  ) {}
+  ) {
+    this.prePopulateForm();
+  }
 
   taxFilingStatus = [
     'Single',
@@ -197,10 +199,14 @@ export class EsppProfitFormComponent {
   //   }
   // }
 
+  get controls() {
+    return this.esppForm.controls;
+  }
+
   prePopulateForm() {
     this.esppForm.setValue({
       dates: {
-        offerDate: moment('2020-01-01'),
+        offerDate: moment('2019-01-01'),
         purchaseDate: moment('2021-01-01'),
       },
       profits: {
@@ -219,6 +225,12 @@ export class EsppProfitFormComponent {
     });
   }
   logger<T>(stuff: T) {
-    console.log(stuff);
+    const dates = this.esppForm.get('dates');
+    const profits = this.esppForm.get('profits');
+    const taxes = this.esppForm.get('taxes');
+
+    console.log(dates, profits, taxes);
+
+    return stuff;
   }
 }

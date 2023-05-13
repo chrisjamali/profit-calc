@@ -8,7 +8,7 @@
     <mat-divider></mat-divider>
     <ng-container formGroupName="dates">
       <fieldset>
-        <legend>Start Date of Offering Period</legend>
+        <legend>Offer Date</legend>
         <mat-form-field appearance="fill">
           <mat-label>Offer Date/Grant Date</mat-label>
           <input matInput [matDatepicker]="dp" formControlName="offerDate" />
@@ -23,13 +23,13 @@
       <mat-divider> </mat-divider>
 
       <fieldset>
-        <legend>End Date of Offering Period</legend>
+        <legend>Purchase Date</legend>
         <mat-form-field appearance="outline">
           <mat-label>Purchase Date</mat-label>
           <input
             matInput
             [matDatepicker]="purchase"
-            formControlName="offerDate"
+            formControlName="purchaseDate"
             required
           />
           <mat-hint>MM/DD/YYYY</mat-hint>
@@ -85,6 +85,7 @@
         <mat-radio-group
           aria-label="Does your Employer offer Lookback"
           type="boolean"
+          formControlName="lookback"
           required
         >
           <mat-radio-button [value]="true">

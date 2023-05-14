@@ -4,8 +4,6 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class TotalPriceService {
-
-
   considerLookback(
     lookback: boolean,
     offerPrice: number,
@@ -21,25 +19,21 @@ export class TotalPriceService {
     return paidPriceNoDiscount;
   }
 
- getPaidPrice(
-    paidPriceNoDiscount: number,
-    discountRate: number
-  ): number {
+  getPaidPrice(paidPriceNoDiscount: number, discountRate: number): number {
     // apply the discount rate to the paidPriceNoDiscount
     const discount = paidPriceNoDiscount * (discountRate / 100);
     return paidPriceNoDiscount - discount;
   }
 
-  getTotalProfit(
+  getTotalProfitUntaxed(
     paidPrice: number,
     numShares: number,
     currentStockPrice: number
   ): number {
-
     const totalProfit = (currentStockPrice - paidPrice) * numShares;
 
     return totalProfit;
   }
 
-
+  
 }

@@ -102,8 +102,8 @@ export class TaxService {
     numShares: number,
     incomeTaxBracket: number
   ) {
-    const gain = (fmv - paidAmount) * numShares;
-    const amountTaxedAsIncome = gain * (incomeTaxBracket / 100);
+    const gain: number = (fmv - paidAmount) * numShares;
+    const amountTaxedAsIncome: number = gain * (incomeTaxBracket / 100);
     return amountTaxedAsIncome;
   }
 
@@ -114,8 +114,9 @@ export class TaxService {
     numShares: number,
     capitalGainsTaxBracket: number
   ) {
-    const gain = (fmv - paidAmount) * numShares;
-    const amountTaxedAsCapitalGains = gain * (capitalGainsTaxBracket / 100);
+    const gain: number = (fmv - paidAmount) * numShares;
+    const amountTaxedAsCapitalGains: number =
+      gain * (capitalGainsTaxBracket / 100);
     return amountTaxedAsCapitalGains;
   }
 }

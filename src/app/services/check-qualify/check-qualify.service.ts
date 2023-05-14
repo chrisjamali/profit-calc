@@ -4,8 +4,6 @@ import * as moment from 'moment';
   providedIn: 'root',
 })
 export class CheckQualifyService {
-  
-
   checkQualify(offerDate: moment.Moment): boolean {
     const today = moment();
     const diffYears = Math.abs(
@@ -19,6 +17,8 @@ export class CheckQualifyService {
     const diffYears = Math.abs(
       moment.duration(purchaseDate.diff(today)).asYears()
     );
+
+    console.log(diffYears, 'diffYearsCAPTIAL GAINS');
 
     return diffYears >= 1;
   }

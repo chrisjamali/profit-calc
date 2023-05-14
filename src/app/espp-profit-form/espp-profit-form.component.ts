@@ -8,19 +8,10 @@ import { DatePipe } from '@angular/common';
 
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
+import { FormDataService } from '../services/form-data.service';
+import { nonNullObject } from '../utiles/typeGuard';
+import { EsppForm, Dates, Profits, Taxes, MyForm } from '../models/formModels';
 
-interface EsppForm {
-  offerPrice: number;
-  purchasePrice: number;
-  offerDate: moment.Moment;
-  purchaseDate: moment.Moment;
-  lookback: boolean;
-  numShares: number;
-  discountRate: number;
-  currentStockPrice: number;
-  income: number;
-  taxStatus: string;
-}
 @Component({
   selector: 'app-espp-profit-form',
   templateUrl: './espp-profit-form.component.html',
@@ -28,17 +19,6 @@ interface EsppForm {
   providers: [DatePipe],
 })
 export class EsppProfitFormComponent {
-  // @Input() offerPrice?: number;
-  // @Input() purchasePrice?: number;
-  // @Input() offerDate?: moment.Moment;
-  // @Input() purchaseDate?: moment.Moment;
-  // @Input() lookback?: boolean;
-  // @Input() numShares?: number;
-  // @Input() discountRate?: number;
-  // @Input() currentStockPrice?: number;
-  // @Input() income?: number;
-  // @Input() taxStatus?: string;
-
   qualifiedDisposition?: boolean;
   qualifiedCapitalGains?: boolean;
   fairMarketValue?: number;
@@ -78,9 +58,7 @@ export class EsppProfitFormComponent {
   });
 
   constructor(
-    private totalPriceService: TotalPriceService,
-    private checkQualifyService: CheckQualifyService,
-    private TaxService: TaxService,
+    private formDataService: FormDataService,
     private form: FormBuilder
   ) {
     this.prePopulateForm();
@@ -93,112 +71,6 @@ export class EsppProfitFormComponent {
     'Head of Household',
   ];
 
-  checkQualify(offerDate: moment.Moment, purchaseDate: moment.Moment) {
-    const qualifiedDisposition =
-      this.checkQualifyService.checkQualify(offerDate);
-    const qualifiedCapitalGains =
-      this.checkQualifyService.checkCapitalGains(purchaseDate);
-
-    this.qualifiedDisposition = qualifiedDisposition;
-    this.qualifiedCapitalGains = qualifiedCapitalGains;
-  }
-
-  getTotalProfit(
-    offerPrice: number,
-    purchasePrice: number,
-    numShares: number,
-    discountRate: number,
-    currentStockPrice: number,
-    lookback: boolean
-  ) {
-    const fairMarketValue: number = this.totalPriceService.considerLookback(
-      lookback,
-      offerPrice,
-      purchasePrice
-    );
-
-    const paidPriceDiscount: number = this.totalPriceService.getPaidPrice(
-      fairMarketValue,
-      discountRate
-    );
-
-    const totalProfitUntaxed: number = this.totalPriceService.getTotalProfit(
-      paidPriceDiscount,
-      numShares,
-      currentStockPrice
-    );
-    this.fairMarketValue = fairMarketValue;
-    this.paidPricePerStockDiscounted = paidPriceDiscount;
-    this.totalProfitUntaxed = totalProfitUntaxed;
-  }
-
-  getIncomeTaxBracket(income: number, taxStatus: string) {
-    const taxBracket = this.TaxService.incomeTaxBracket(income, taxStatus);
-    this.incomeTaxBracket = taxBracket;
-  }
-
-  getCapitalGainsTaxBracket(income: number, taxStatus: string) {
-    const taxBracket = this.TaxService.capitalGainsTaxBracket(
-      income,
-      taxStatus
-    );
-    this.capitalGainsTaxBracket = taxBracket;
-  }
-
-  test<Form extends EsppForm>(f?: Form, o?: moment.Moment, p?: moment.Moment) {
-    console.log(f, o, p);
-  }
-
-  // send(
-  //   esppForm: EsppForm,
-  //   offerDate?: moment.Moment,
-  //   purchaseDate?: moment.Moment
-  // ) {
-  //   const hasRequiredProperties =
-  //     esppForm &&
-  //     esppForm.offerPrice !== undefined &&
-  //     esppForm.purchasePrice !== undefined &&
-  //     esppForm.numShares !== undefined &&
-  //     esppForm.discountRate !== undefined &&
-  //     esppForm.currentStockPrice !== undefined &&
-  //     esppForm.lookback !== undefined &&
-  //     esppForm.income !== undefined &&
-  //     esppForm.taxStatus !== undefined;
-
-  //   if (hasRequiredProperties) {
-  //     const {
-  //       offerPrice,
-  //       purchasePrice,
-  //       numShares,
-  //       discountRate,
-  //       currentStockPrice,
-  //       lookback,
-  //       income,
-  //       taxStatus,
-  //     } = esppForm;
-
-  //     this.getIncomeTaxBracket(income, taxStatus);
-  //     this.getCapitalGainsTaxBracket(income, taxStatus);
-
-  //     this.getTotalProfit(
-  //       offerPrice,
-  //       purchasePrice,
-  //       numShares,
-  //       discountRate,
-  //       currentStockPrice,
-  //       lookback
-  //     );
-  //   }
-  //   if (offerDate && purchaseDate) {
-  //     this.checkQualify(offerDate, purchaseDate);
-  //   }
-
-  //   console.log('AFTER SEND', this);
-  //   for (const key in this) {
-  //     console.log(key, typeof this[key]);
-  //   }
-  // }
-
   get controls() {
     return this.esppForm.controls;
   }
@@ -206,8 +78,8 @@ export class EsppProfitFormComponent {
   prePopulateForm() {
     this.esppForm.setValue({
       dates: {
-        offerDate: moment('2019-01-01'),
-        purchaseDate: moment('2021-01-01'),
+        offerDate: moment('2023-01-01'),
+        purchaseDate: moment('2023-05-01'),
       },
       profits: {
         offerPrice: 50.8,
@@ -224,13 +96,34 @@ export class EsppProfitFormComponent {
       },
     });
   }
-  logger<T>(stuff: T) {
-    const dates = this.esppForm.get('dates');
-    const profits = this.esppForm.get('profits');
-    const taxes = this.esppForm.get('taxes');
+  onSubmit() {
+    const formValues = this.esppForm.value;
 
-    console.log(dates, profits, taxes);
+    console.log(formValues.dates);
 
-    return stuff;
+    console.log(this.esppForm);
+
+    if (nonNullObject<MyForm>(formValues)) {
+      console.log(formValues);
+      const dates = formValues.dates;
+      const profits = formValues.profits;
+      const taxes = formValues.taxes;
+      if (nonNullObject<Dates>(dates)) {
+        this.formDataService.handleDates(dates);
+      }
+
+      if (nonNullObject<Profits>(profits)) {
+        this.formDataService.handleProfits(profits);
+      }
+
+      if (nonNullObject<Taxes>(taxes)) {
+        this.formDataService.handleTaxes(taxes);
+      }
+
+      if (nonNullObject<Profits>(profits)) {
+        this.formDataService.handleTotalProfitTaxed(profits);
+      }
+      console.log(this.formDataService, 'FROM COMPONENT');
+    }
   }
 }

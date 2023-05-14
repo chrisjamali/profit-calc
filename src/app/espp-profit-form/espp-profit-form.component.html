@@ -1,8 +1,13 @@
-<form [formGroup]="esppForm" (ngSubmit)="logger(esppForm)">
+<form [formGroup]="esppForm" (ngSubmit)="onSubmit()">
   <!-- <mat-card> -->
   <header class="center">
     <h1>ESPP Profit Calculator</h1>
-    <br />
+    <!-- <br /> -->
+    <p>
+      This calculator will help you determine your profit if you were to sell
+      your ESPP today.
+    </p>
+    <!-- <br /> -->
   </header>
   <main>
     <mat-divider></mat-divider>
@@ -185,7 +190,14 @@
 
     <!-- <mat-card-footer>
       <mat-card-actions> -->
-    <button mat-raised-button color="primary" type="submit">Calculate</button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="!esppForm.valid"
+    >
+      Calculate
+    </button>
 
     <!-- </mat-card-actions>
     </mat-card-footer> -->

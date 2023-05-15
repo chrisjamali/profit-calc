@@ -25,9 +25,10 @@ import { TotalPriceService } from './services/total-price/total-price.service';
 import { DatePipe } from '@angular/common';
 import { AutoDecimalDirective } from './directives/auto-decimal.directive';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ResultsComponent } from './results/results.component';
 const moment = _moment;
 @NgModule({
-  declarations: [AppComponent, EsppProfitFormComponent, AutoDecimalDirective],
+  declarations: [AppComponent, EsppProfitFormComponent, AutoDecimalDirective, ResultsComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

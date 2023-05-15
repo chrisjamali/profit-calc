@@ -1,213 +1,214 @@
-<form [formGroup]="esppForm" (ngSubmit)="onSubmit()">
-  <!-- <mat-card> -->
-  <header class="center">
-    <h1>ESPP Profit Calculator</h1>
-    <!-- <br /> -->
-    <p>
-      This calculator will help you determine your profit if you were to sell
-      your ESPP today.
-    </p>
-    <!-- <br /> -->
-  </header>
-  <main>
-    <mat-divider></mat-divider>
-    <ng-container formGroupName="dates">
-      <fieldset>
-        <legend>Offer Date</legend>
-        <mat-form-field appearance="fill">
-          <mat-label>Offer Date/Grant Date</mat-label>
-          <input matInput [matDatepicker]="dp" formControlName="offerDate" />
-          <mat-hint>MM/DD/YYYY</mat-hint>
-          <mat-datepicker-toggle
-            matIconSuffix
-            [for]="dp"
-          ></mat-datepicker-toggle>
-          <mat-datepicker touchUi #dp></mat-datepicker>
-        </mat-form-field>
-      </fieldset>
-      <mat-divider> </mat-divider>
-
-      <fieldset>
-        <legend>Purchase Date</legend>
-        <mat-form-field appearance="outline">
-          <mat-label>Purchase Date</mat-label>
-          <input
-            matInput
-            [matDatepicker]="purchase"
-            formControlName="purchaseDate"
-            required
-          />
-          <mat-hint>MM/DD/YYYY</mat-hint>
-          <mat-datepicker-toggle
-            matIconSuffix
-            [for]="purchase"
-          ></mat-datepicker-toggle>
-          <mat-datepicker touchUi #purchase></mat-datepicker>
-        </mat-form-field>
-      </fieldset>
+<div class="outer-container">
+  <form [formGroup]="esppForm" (ngSubmit)="onSubmit()">
+    <!-- <mat-card> -->
+    <header class="center">
+      <h1>ESPP Profit Calculator</h1>
+      <!-- <br /> -->
+      <p>
+        This calculator will help you determine your profit if you were to sell
+        your ESPP today.
+      </p>
+      <!-- <br /> -->
+    </header>
+    <main>
       <mat-divider></mat-divider>
-    </ng-container>
+      <ng-container formGroupName="dates">
+        <fieldset>
+          <legend>Offer Date</legend>
+          <mat-form-field appearance="fill">
+            <mat-label>Offer Date/Grant Date</mat-label>
+            <input matInput [matDatepicker]="dp" formControlName="offerDate" />
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="dp"
+            ></mat-datepicker-toggle>
+            <mat-datepicker touchUi #dp></mat-datepicker>
+          </mat-form-field>
+        </fieldset>
+        <mat-divider> </mat-divider>
 
-    <ng-container formGroupName="profits">
-      <fieldset>
-        <legend>Offer Price</legend>
-        <mat-form-field>
-          <mat-label>Offer Price</mat-label>
-          <mat-icon matPrefix>attach_money</mat-icon>
-          <input
-            matInput
-            placeholder="Offer Price"
-            formControlName="offerPrice"
-            type="number"
-            appAutoDecimal
+        <fieldset>
+          <legend>Purchase Date</legend>
+          <mat-form-field appearance="outline">
+            <mat-label>Purchase Date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="purchase"
+              formControlName="purchaseDate"
+              required
+            />
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="purchase"
+            ></mat-datepicker-toggle>
+            <mat-datepicker touchUi #purchase></mat-datepicker>
+          </mat-form-field>
+        </fieldset>
+        <mat-divider></mat-divider>
+      </ng-container>
+
+      <ng-container formGroupName="profits">
+        <fieldset>
+          <legend>Offer Price</legend>
+          <mat-form-field>
+            <mat-label>Offer Price</mat-label>
+            <mat-icon matPrefix>attach_money</mat-icon>
+            <input
+              matInput
+              placeholder="Offer Price"
+              formControlName="offerPrice"
+              type="number"
+              appAutoDecimal
+              required
+            />
+          </mat-form-field>
+        </fieldset>
+        <mat-divider></mat-divider>
+
+        <fieldset>
+          <legend>Purchase Price</legend>
+          <mat-form-field>
+            <mat-label>Purchase Price</mat-label>
+            <mat-icon matPrefix>attach_money</mat-icon>
+
+            <input
+              matInput
+              placeholder="Purchase Price"
+              formControlName="purchasePrice"
+              type="number"
+              appAutoDecimal
+              required
+            />
+          </mat-form-field>
+        </fieldset>
+
+        <mat-divider></mat-divider>
+        <fieldset>
+          <legend>Lookback Option</legend>
+
+          <mat-radio-group
+            aria-label="Does your Employer offer Lookback"
+            type="boolean"
+            formControlName="lookback"
             required
-          />
-        </mat-form-field>
-      </fieldset>
-      <mat-divider></mat-divider>
-
-      <fieldset>
-        <legend>Purchase Price</legend>
-        <mat-form-field>
-          <mat-label>Purchase Price</mat-label>
-          <mat-icon matPrefix>attach_money</mat-icon>
-
-          <input
-            matInput
-            placeholder="Purchase Price"
-            formControlName="purchasePrice"
-            type="number"
-            appAutoDecimal
-            required
-          />
-        </mat-form-field>
-      </fieldset>
-
-      <mat-divider></mat-divider>
-      <fieldset>
-        <legend>Lookback Option</legend>
-
-        <mat-radio-group
-          aria-label="Does your Employer offer Lookback"
-          type="boolean"
-          formControlName="lookback"
-          required
-        >
-          <mat-radio-button [value]="true">
-            <span class="radio-label">Yes</span>
-          </mat-radio-button>
-          <mat-radio-button [value]="false"
-            ><span class="radio-label">No</span></mat-radio-button
           >
-        </mat-radio-group>
-      </fieldset>
+            <mat-radio-button [value]="true">
+              <span class="radio-label">Yes</span>
+            </mat-radio-button>
+            <mat-radio-button [value]="false"
+              ><span class="radio-label">No</span></mat-radio-button
+            >
+          </mat-radio-group>
+        </fieldset>
 
-      <mat-divider></mat-divider>
+        <mat-divider></mat-divider>
 
-      <!-- NUMBER OF SHARES -->
-      <fieldset>
-        <legend>Number of Shares</legend>
-        <mat-form-field>
-          <mat-label>Number of Shares held</mat-label>
-          <input
-            matInput
-            placeholder="ex) 50"
-            formControlName="numShares"
-            type="number"
-            required
-          />
-        </mat-form-field>
-      </fieldset>
+        <!-- NUMBER OF SHARES -->
+        <fieldset>
+          <legend>Number of Shares</legend>
+          <mat-form-field>
+            <mat-label>Number of Shares held</mat-label>
+            <input
+              matInput
+              placeholder="ex) 50"
+              formControlName="numShares"
+              type="number"
+              required
+            />
+          </mat-form-field>
+        </fieldset>
 
-      <mat-divider></mat-divider>
+        <mat-divider></mat-divider>
 
-      <!-- % DISCOUNT -->
-      <fieldset>
-        <legend>Discount Rate</legend>
+        <!-- % DISCOUNT -->
+        <fieldset>
+          <legend>Discount Rate</legend>
 
-        <mat-form-field>
-          <mat-label>Discount %</mat-label>
-          <input
-            matInput
-            placeholder="1-15"
-            formControlName="discountRate"
-            type="number"
-            required
-          />
-        </mat-form-field>
-      </fieldset>
-      <mat-divider></mat-divider>
-      <!-- Current Stock Price -->
-      <fieldset>
-        <legend>Current Stock Price</legend>
-        <mat-form-field>
-          <mat-label>Current Stock Price </mat-label>
-          <mat-icon matPrefix>attach_money</mat-icon>
-          <input
-            matInput
-            placeholder="330.45"
-            formControlName="currentStockPrice"
-            type="number"
-            appAutoDecimal
-            required
-          />
-        </mat-form-field>
-      </fieldset>
-    </ng-container>
+          <mat-form-field>
+            <mat-label>Discount %</mat-label>
+            <input
+              matInput
+              placeholder="1-15"
+              formControlName="discountRate"
+              type="number"
+              required
+            />
+          </mat-form-field>
+        </fieldset>
+        <mat-divider></mat-divider>
+        <!-- Current Stock Price -->
+        <fieldset>
+          <legend>Current Stock Price</legend>
+          <mat-form-field>
+            <mat-label>Current Stock Price </mat-label>
+            <mat-icon matPrefix>attach_money</mat-icon>
+            <input
+              matInput
+              placeholder="330.45"
+              formControlName="currentStockPrice"
+              type="number"
+              appAutoDecimal
+              required
+            />
+          </mat-form-field>
+        </fieldset>
+      </ng-container>
 
-    <ng-container formGroupName="taxes">
-      <mat-divider></mat-divider>
-      <fieldset>
-        <legend>Income</legend>
-        <mat-form-field>
-          <mat-label>Gross Income </mat-label>
-          <mat-icon matPrefix>attach_money</mat-icon>
-          <input
-            matInput
-            placeholder="100,000"
-            formControlName="income"
-            type="number"
-            required
-          />
-          <mat-hint>This is prior to taxes</mat-hint>
-        </mat-form-field>
-      </fieldset>
-      <mat-divider></mat-divider>
+      <ng-container formGroupName="taxes">
+        <mat-divider></mat-divider>
+        <fieldset>
+          <legend>Income</legend>
+          <mat-form-field>
+            <mat-label>Gross Income </mat-label>
+            <mat-icon matPrefix>attach_money</mat-icon>
+            <input
+              matInput
+              placeholder="100,000"
+              formControlName="income"
+              type="number"
+              required
+            />
+            <mat-hint>This is prior to taxes</mat-hint>
+          </mat-form-field>
+        </fieldset>
+        <mat-divider></mat-divider>
 
-      <fieldset>
-        <legend>Tax Status</legend>
-        <mat-form-field>
-          <mat-label>What is your tax filing status </mat-label>
-          <mat-select formControlName="taxStatus" required>
-            <mat-option *ngFor="let status of taxFilingStatus" [value]="status">
-              {{ status }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </fieldset>
-    </ng-container>
-    <br />
+        <fieldset>
+          <legend>Tax Status</legend>
+          <mat-form-field>
+            <mat-label>What is your tax filing status </mat-label>
+            <mat-select formControlName="taxStatus" required>
+              <mat-option
+                *ngFor="let status of taxFilingStatus"
+                [value]="status"
+              >
+                {{ status }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </fieldset>
+      </ng-container>
+      <br />
 
-    <!-- <mat-card-footer>
+      <!-- <mat-card-footer>
       <mat-card-actions> -->
-    <button
-      mat-raised-button
-      color="primary"
-      type="submit"
-      [disabled]="!esppForm.valid"
-    >
-      Calculate
-    </button>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="!esppForm.valid"
+      >
+        Calculate
+      </button>
 
-    <!-- </mat-card-actions>
+      <!-- </mat-card-actions>
     </mat-card-footer> -->
-  </main>
-  <!-- </mat-card> -->
-</form>
-
-<pre>
-  <!-- {{ esppForm.value | json }}
-  {{esppForm.valid | json}}
-   <!-- {{esppForm.offerDate | json}} -->
-
-</pre>
+    </main>
+    <!-- </mat-card> -->
+  </form>
+  <!-- <ng-template> -->
+  <app-results></app-results>
+  <!-- </ng-template> -->
+</div>

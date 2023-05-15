@@ -2,14 +2,21 @@ import { Injectable } from '@angular/core';
 import { TotalPriceService } from '../services/total-price/total-price.service';
 import { CheckQualifyService } from '../services/check-qualify/check-qualify.service';
 import { TaxService } from '../services/tax-service/tax.service';
-import { EsppForm, Dates, Profits, Taxes, MyForm } from '../models/formModels';
+import {
+  EsppForm,
+  Dates,
+  Profits,
+  Taxes,
+  MyForm,
+  Results,
+} from '../models/formModels';
+
+import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
 export class FormDataService {
-
-private calculationCompleted = false;
-
+  public calculationResults$ = new BehaviorSubject<Results | null>(null);
 
   qualifiedDisposition?: boolean;
   qualifiedCapitalGains?: boolean;
@@ -89,7 +96,6 @@ private calculationCompleted = false;
   }
 
   handleTotalProfitTaxed(profitsObject: Profits) {
-
     const { purchasePrice, currentStockPrice, numShares } = profitsObject;
     let taxedAsIncome = 0;
     let taxedAsCapitalGains = 0;
@@ -102,7 +108,6 @@ private calculationCompleted = false;
     ) {
       if (this.qualifiedDisposition && this.qualifiedCapitalGains) {
         // ^ QUALIFIED disposition AND QUALIFIED FOR CAPITAL GAINS
-
 
         // ^( discounted - undiscouted * taxIncome )  * shares sold
         // const totalProfitTaxed = this.totalProfitUntaxed - this.totalProfitUntaxed * this.incomeTaxBracket;
@@ -155,6 +160,40 @@ private calculationCompleted = false;
       // ^ How much profit you made after taxes
       this.totalProfitAfterTaxed =
         this.totalProfitUntaxed - this.totalAmountTaxed;
+
+      this.sendResults();
+    }
+  }
+
+  sendResults() {
+    if (
+      this.qualifiedDisposition &&
+      this.qualifiedCapitalGains &&
+      this.fairMarketValue &&
+      this.paidPricePerStockDiscounted &&
+      this.totalProfitUntaxed &&
+      this.incomeTaxBracket &&
+      this.capitalGainsTaxBracket &&
+      this.amountTaxedAsIncome &&
+      this.amountTaxedAsCapitalGains &&
+      this.totalAmountTaxed &&
+      this.totalProfitAfterTaxed
+    ) {
+      const results: Results = {
+        qualifiedDisposition: this.qualifiedDisposition,
+        qualifiedCapitalGains: this.qualifiedCapitalGains,
+        fairMarketValue: this.fairMarketValue,
+        paidPricePerStockDiscounted: this.paidPricePerStockDiscounted,
+        totalProfitUntaxed: this.totalProfitUntaxed,
+        incomeTaxBracket: this.incomeTaxBracket,
+        capitalGainsTaxBracket: this.capitalGainsTaxBracket,
+        amountTaxedAsIncome: this.amountTaxedAsIncome,
+        amountTaxedAsCapitalGains: this.amountTaxedAsCapitalGains,
+        totalAmountTaxed: this.totalAmountTaxed,
+        totalProfitAfterTaxed: this.totalProfitAfterTaxed,
+      };
+
+      this.calculationResults$.next(results);
     }
   }
 }

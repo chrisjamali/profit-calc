@@ -160,24 +160,36 @@ export class FormDataService {
       // ^ How much profit you made after taxes
       this.totalProfitAfterTaxed =
         this.totalProfitUntaxed - this.totalAmountTaxed;
-
+      console.log(
+        this.qualifiedDisposition,
+        this.qualifiedCapitalGains,
+        this.fairMarketValue,
+        this.paidPricePerStockDiscounted,
+        this.totalProfitUntaxed,
+        this.incomeTaxBracket,
+        this.capitalGainsTaxBracket,
+        this.amountTaxedAsIncome,
+        this.amountTaxedAsCapitalGains,
+        this.totalAmountTaxed,
+        this.totalProfitAfterTaxed
+      );
       this.sendResults();
     }
   }
 
   sendResults() {
     if (
-      this.qualifiedDisposition &&
-      this.qualifiedCapitalGains &&
-      this.fairMarketValue &&
-      this.paidPricePerStockDiscounted &&
-      this.totalProfitUntaxed &&
-      this.incomeTaxBracket &&
-      this.capitalGainsTaxBracket &&
-      this.amountTaxedAsIncome &&
-      this.amountTaxedAsCapitalGains &&
-      this.totalAmountTaxed &&
-      this.totalProfitAfterTaxed
+      this.qualifiedDisposition !== undefined &&
+      this.qualifiedCapitalGains !== undefined &&
+      this.fairMarketValue !== undefined &&
+      this.paidPricePerStockDiscounted !== undefined &&
+      this.totalProfitUntaxed !== undefined &&
+      this.incomeTaxBracket !== undefined &&
+      this.capitalGainsTaxBracket !== undefined &&
+      this.amountTaxedAsIncome !== undefined &&
+      this.amountTaxedAsCapitalGains !== undefined &&
+      this.totalAmountTaxed !== undefined &&
+      this.totalProfitAfterTaxed !== undefined
     ) {
       const results: Results = {
         qualifiedDisposition: this.qualifiedDisposition,
@@ -192,7 +204,7 @@ export class FormDataService {
         totalAmountTaxed: this.totalAmountTaxed,
         totalProfitAfterTaxed: this.totalProfitAfterTaxed,
       };
-
+      console.log(results, 'results from service');
       this.calculationResults$.next(results);
     }
   }

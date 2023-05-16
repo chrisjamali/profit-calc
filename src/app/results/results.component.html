@@ -3,6 +3,11 @@
 <mat-card>
   <mat-card-title>Results</mat-card-title>
   <mat-card-content>
-    <p>Results go here</p>
+    <p>Here are your results</p>
+    <!-- <p>Profit: {{ profit }}</p>
+    <p>Profit Percentage: {{ profitPercentage }}</p> -->
+    <p>{{ totalProfitUntaxed | currency }}</p>
+    <p>{{ totalAmountTaxed | currency }}</p>
+    <p>{{ totalProfitAfterTaxed | currency }}</p>
   </mat-card-content>
 </mat-card>

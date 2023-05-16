@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormDataService } from '../services/form-data.service';
 import { Results } from '../models/formModels';
 
@@ -9,6 +9,11 @@ import { Results } from '../models/formModels';
 })
 export class ResultsComponent {
   calculationsComplete = false;
+
+  @Input() numShares?: number;
+  @Input() salePrice?: number;
+  @Input() dicountedPrice?: number;
+  @Input() purchaseProce?: number;
 
   qualifiedDisposition?: boolean;
   qualifiedCapitalGains?: boolean;
@@ -27,7 +32,8 @@ export class ResultsComponent {
   constructor(private formDataService: FormDataService) {
     this.formDataService.calculationResults$.subscribe((results) => {
       if (results) {
-        this.calculationsComplete = true;
+        console.log(results, 'from results');
+
         this.qualifiedDisposition = results.qualifiedDisposition;
         this.qualifiedCapitalGains = results.qualifiedCapitalGains;
         this.fairMarketValue = results.fairMarketValue;
@@ -41,6 +47,7 @@ export class ResultsComponent {
         this.amountTaxedAsCapitalGains = results.amountTaxedAsCapitalGains;
         this.totalAmountTaxed = results.totalAmountTaxed;
         this.totalProfitAfterTaxed = results.totalProfitAfterTaxed;
+        this.calculationsComplete = true;
       }
     });
 

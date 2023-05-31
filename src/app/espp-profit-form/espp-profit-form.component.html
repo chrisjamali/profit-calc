@@ -209,6 +209,12 @@
     <!-- </mat-card> -->
   </form>
   <!-- <ng-template> -->
-  <app-results></app-results>
+  <app-results
+    *ngIf="esppForm.valid"
+    [numShares]="esppForm.value.profits?.numShares"
+    [discountRate]="esppForm.value.profits?.discountRate"
+    [salePrice]="esppForm.value.profits?.currentStockPrice"
+    [purchasePrice]="esppForm.value.profits?.purchasePrice"
+  ></app-results>
   <!-- </ng-template> -->
 </div>

@@ -10,10 +10,10 @@ import { Results } from '../models/formModels';
 export class ResultsComponent {
   calculationsComplete = false;
 
-  @Input() numShares?: number;
-  @Input() salePrice?: number;
-  @Input() dicountedPrice?: number;
-  @Input() purchaseProce?: number;
+  @Input() numShares?: number | null;
+  @Input() salePrice?: number | null;
+  @Input() discountRate?: number | null;
+  @Input() purchasePrice?: number | null;
 
   qualifiedDisposition?: boolean;
   qualifiedCapitalGains?: boolean;
@@ -32,7 +32,7 @@ export class ResultsComponent {
   constructor(private formDataService: FormDataService) {
     this.formDataService.calculationResults$.subscribe((results) => {
       if (results) {
-        console.log(results, 'from results');
+        console.log(results, 'from results', this);
 
         this.qualifiedDisposition = results.qualifiedDisposition;
         this.qualifiedCapitalGains = results.qualifiedCapitalGains;
